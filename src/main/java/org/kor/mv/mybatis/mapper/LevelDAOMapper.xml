@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.LevelDAOMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.LevelDAO">
+    <id column="등급별" jdbcType="VARCHAR" property="levelName" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+  </resultMap>
+    <resultMap id="LevelComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="등급별" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+    <sql id="Base_Column_List">
+    id, 등급별
+  </sql>
+    <select id="selectLevelNameList" resultMap="LevelComboboxResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from mverp_dev.level
+  </select>
+ 
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mverp_dev.level
+    where 등급별 = #{등급별,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mverp_dev.level
+    where 등급별 = #{등급별,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.LevelDAO">
+    insert into mverp_dev.level (등급별, id)
+    values (#{등급별,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.LevelDAO">
+    insert into mverp_dev.level
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="등급별 != null">
+        등급별,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="등급별 != null">
+        #{등급별,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.kor.mv.mybatis.pojo.LevelDAO">
+    update mverp_dev.level
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 등급별 = #{등급별,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.LevelDAO">
+    update mverp_dev.level
+    set id = #{id,jdbcType=VARCHAR}
+    where 등급별 = #{등급별,jdbcType=VARCHAR}
+  </update> 
+</mapper>

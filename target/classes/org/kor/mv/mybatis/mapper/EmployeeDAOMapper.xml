@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.EmployeeDAOMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.EmployeeDAO">
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="성명" jdbcType="VARCHAR" property="name" />
+    <result column="주민등록번호" jdbcType="VARCHAR" property="residRegistrNum" />
+    <result column="핸드폰번호" jdbcType="VARCHAR" property="mobileNum" />
+    <result column="이메일주소" jdbcType="VARCHAR" property="emailAddress" />
+    <result column="자격증유무" jdbcType="CHAR" property="certification" />
+    <result column="특이사항" jdbcType="VARCHAR" property="specialNote" />
+    <result column="입사일" jdbcType="TIMESTAMP" property="hiredate" />
+    <result column="부서" jdbcType="VARCHAR" property="depart" />
+    <result column="직급" jdbcType="VARCHAR" property="position" />
+    <result column="등급" jdbcType="VARCHAR" property="level" />
+    <result column="퇴사일" jdbcType="TIMESTAMP" property="resignationDate" />
+    <result column="deleteStatus" jdbcType="TINYINT" property="deletestatus" />
+    <result column="재직상태" jdbcType="VARCHAR" property="officeStatus" />
+    <result column="집주소" jdbcType="VARCHAR" property="homeAddress" />
+  </resultMap>
+  <sql id="BaseResultMap">
+  ID, 성명, 주민등록번호, 
+      핸드폰번호, 이메일주소, 자격증유무, 특이사항, 
+      입사일, 부서, 직급, 등급, 
+      퇴사일, deleteStatus, 재직상태, 집주소
+  </sql>
+  <sql id="NodeleteDataResultMap">
+  ID, 성명, 주민등록번호, 
+      핸드폰번호, 이메일주소, 자격증유무, 특이사항, 
+      입사일, 부서, 직급, 등급, 
+      퇴사일, 재직상태, 집주소
+  </sql>  
+  <select id="selectEmployeeInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="NodeleteDataResultMap" />
+  	from mverp_dev.employee where 성명=#{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectEmployeeNameList" resultType="java.lang.String">
+  	select 성명 from mverp_dev.employee  order by 성명  asc
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select
+  	<include refid="BaseResultMap" />
+  	from mverp_dev.employee where ID=#{id,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.EmployeeDAO">
+    insert into mverp_dev.employee (ID, 성명, 주민등록번호, 
+      핸드폰번호, 이메일주소, 자격증유무, 특이사항, 
+      입사일, 부서, 직급, 등급, 
+      퇴사일, deleteStatus, 재직상태, 집주소
+      )
+    values (#{record.id,jdbcType=VARCHAR}, #{record.name,jdbcType=VARCHAR}, #{record.residRegistrNum,jdbcType=VARCHAR}, 
+      #{record.mobileNum,jdbcType=VARCHAR}, #{record.emailAddress,jdbcType=VARCHAR}, #{record.certification,jdbcType=CHAR}, #{record.specialNote,jdbcType=VARCHAR}, 
+      #{record.hiredate,jdbcType=TIMESTAMP}, #{record.depart,jdbcType=VARCHAR}, #{record.position,jdbcType=VARCHAR}, #{record.level,jdbcType=VARCHAR}, 
+      #{record.resignationDate,jdbcType=TIMESTAMP}, #{record.deletestatus,jdbcType=TINYINT}, #{record.officeStatus,jdbcType=VARCHAR}, #{record.homeAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.EmployeeDAO">
+    insert into mverp_dev.employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="성명 != null">
+        성명,
+      </if>
+      <if test="주민등록번호 != null">
+        주민등록번호,
+      </if>
+      <if test="핸드폰번호 != null">
+        핸드폰번호,
+      </if>
+      <if test="이메일주소 != null">
+        이메일주소,
+      </if>
+      <if test="자격증유무 != null">
+        자격증유무,
+      </if>
+      <if test="특이사항 != null">
+        특이사항,
+      </if>
+      <if test="입사일 != null">
+        입사일,
+      </if>
+      <if test="부서 != null">
+        부서,
+      </if>
+      <if test="직급 != null">
+        직급,
+      </if>
+      <if test="등급 != null">
+        등급,
+      </if>
+      <if test="퇴사일 != null">
+        퇴사일,
+      </if>
+      <if test="deletestatus != null">
+        deleteStatus,
+      </if>
+      <if test="재직상태 != null">
+        재직상태,
+      </if>
+      <if test="집주소 != null">
+        집주소,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="성명 != null">
+        #{성명,jdbcType=VARCHAR},
+      </if>
+      <if test="주민등록번호 != null">
+        #{주민등록번호,jdbcType=VARCHAR},
+      </if>
+      <if test="핸드폰번호 != null">
+        #{핸드폰번호,jdbcType=VARCHAR},
+      </if>
+      <if test="이메일주소 != null">
+        #{이메일주소,jdbcType=VARCHAR},
+      </if>
+      <if test="자격증유무 != null">
+        #{자격증유무,jdbcType=CHAR},
+      </if>
+      <if test="특이사항 != null">
+        #{특이사항,jdbcType=VARCHAR},
+      </if>
+      <if test="입사일 != null">
+        #{입사일,jdbcType=TIMESTAMP},
+      </if>
+      <if test="부서 != null">
+        #{부서,jdbcType=VARCHAR},
+      </if>
+      <if test="직급 != null">
+        #{직급,jdbcType=VARCHAR},
+      </if>
+      <if test="등급 != null">
+        #{등급,jdbcType=VARCHAR},
+      </if>
+      <if test="퇴사일 != null">
+        #{퇴사일,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null">
+        #{deletestatus,jdbcType=TINYINT},
+      </if>
+      <if test="재직상태 != null">
+        #{재직상태,jdbcType=VARCHAR},
+      </if>
+      <if test="집주소 != null">
+        #{집주소,jdbcType=VARCHAR},
+      </if>      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.EmployeeDAO">
+  update mverp_dev.employee set 
+성명=#{record.name,jdbcType=VARCHAR}, 
+주민등록번호=#{record.residRegistrNum,jdbcType=VARCHAR}, 
+핸드폰번호=#{record.mobileNum,jdbcType=VARCHAR}, 
+이메일주소=#{record.emailAddress,jdbcType=VARCHAR}, 
+자격증유무=#{record.certification,jdbcType=CHAR}, 
+특이사항=#{record.specialNote,jdbcType=VARCHAR}, 
+입사일=#{record.hiredate,jdbcType=TIMESTAMP},
+부서=#{record.depart,jdbcType=VARCHAR}, 
+직급=#{record.position,jdbcType=VARCHAR}, 
+등급=#{record.level,jdbcType=VARCHAR}, 
+퇴사일=#{record.resignationDate,jdbcType=TIMESTAMP}, 
+deletestatus=#{record.deletestatus,jdbcType=TINYINT}, 
+재직상태=#{record.officeStatus,jdbcType=VARCHAR}, 
+집주소=#{record.homeAddress,jdbcType=VARCHAR}
+ WHERE ID=#{record.id,jdbcType=VARCHAR};
+  </update>
+</mapper>

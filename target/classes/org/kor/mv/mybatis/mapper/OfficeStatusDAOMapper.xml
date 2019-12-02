@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.OfficeStatusDAOMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.OfficeStatusDAO">
+    <id column="name" jdbcType="VARCHAR" property="name" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+  </resultMap>
+<resultMap id="OffiStatusComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="name" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>  
+  <sql id="Base_Column_List">
+    name, id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mverp_dev.officestatus
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectOfficeStatusList" resultMap="OffiStatusComboboxResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from mverp_dev.officestatus
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mverp_dev.officestatus
+    where name = #{name,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.OfficeStatusDAO">
+    insert into mverp_dev.officestatus (name, id)
+    values (#{name,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.OfficeStatusDAO">
+    insert into mverp_dev.officestatus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.kor.mv.mybatis.pojo.OfficeStatusDAO">
+    update mverp_dev.officestatus
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where name = #{name,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.OfficeStatusDAO">
+    update mverp_dev.officestatus
+    set id = #{id,jdbcType=VARCHAR}
+    where name = #{name,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.SysPermission">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="percode" jdbcType="VARCHAR" property="percode" />
+    <result column="sortstring" jdbcType="VARCHAR" property="sortstring" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, url, percode, sortstring, parentId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mverp_dev.sys_permission
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findMenuListByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select a.name from mverp_dev.sys_permission a,mverp_dev.sys_role_permission b,mverp_dev.sys_user_role c,mverp_dev.sys_user d
+where a.id=b.sys_permission_id and b.sys_role_id=c.sys_role_id and c.sys_user_id=d.id and d.id=#{id,jdbcType=VARCHAR} and a.type="menu";
+  </select>
+  <select id="findPermissionListByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select a.name from mverp_dev.sys_permission a,mverp_dev.sys_role_permission b,mverp_dev.sys_user_role c,mverp_dev.sys_user d
+where a.id=b.sys_permission_id and b.sys_role_id=c.sys_role_id and c.sys_user_id=d.id and d.id=#{id,jdbcType=VARCHAR} and a.type="permission";
+  
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mverp_dev.sys_permission
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.SysPermission">
+    insert into mverp_dev.sys_permission (id, name, type, 
+      url, percode, sortstring, 
+      parentId)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{percode,jdbcType=VARCHAR}, #{sortstring,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.SysPermission">
+    insert into mverp_dev.sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="percode != null">
+        percode,
+      </if>
+      <if test="sortstring != null">
+        sortstring,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="percode != null">
+        #{percode,jdbcType=VARCHAR},
+      </if>
+      <if test="sortstring != null">
+        #{sortstring,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.kor.mv.mybatis.pojo.SysPermission">
+    update mverp_dev.sys_permission
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="percode != null">
+        percode = #{percode,jdbcType=VARCHAR},
+      </if>
+      <if test="sortstring != null">
+        sortstring = #{sortstring,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.SysPermission">
+    update mverp_dev.sys_permission
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      percode = #{percode,jdbcType=VARCHAR},
+      sortstring = #{sortstring,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

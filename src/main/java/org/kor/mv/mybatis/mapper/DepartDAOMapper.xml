@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.DepartDAOMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.DepartDAO">
+    <id column="부서명" jdbcType="VARCHAR" property="departName" />
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sortstring" jdbcType="VARCHAR" property="sortstring" />
+  </resultMap>
+  <resultMap id="DepartComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="부서명" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    부서명, id, sortstring
+  </sql>
+    <sql id="DepartCombobox_Column_List">
+    id, 부서명
+  </sql>
+    <select id="selectDepartNameList" resultMap="DepartComboboxResultMap">
+  	select
+  	<include refid="DepartCombobox_Column_List" />
+  	from mverp_dev.department order by sortstring
+  </select>
+ 
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mverp_dev.department
+    where 부서명 = #{부서명,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mverp_dev.department
+    where 부서명 = #{부서명,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.DepartDAO">
+    insert into mverp_dev.department (부서명, id, sortstring
+      )
+    values (#{부서명,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{sortstring,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.DepartDAO">
+    insert into mverp_dev.department
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="부서명 != null">
+        부서명,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sortstring != null">
+        sortstring,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="부서명 != null">
+        #{부서명,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sortstring != null">
+        #{sortstring,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.kor.mv.mybatis.pojo.DepartDAO">
+    update department
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sortstring != null">
+        sortstring = #{sortstring,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 부서명 = #{부서명,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.DepartDAO">
+    update department
+    set id = #{id,jdbcType=VARCHAR},
+      sortstring = #{sortstring,jdbcType=VARCHAR}
+    where 부서명 = #{부서명,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="testTables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mydb?useUnicode=true;characterEncoding=utf8;useSSL=false;allowPublicKeyRetrieval=true;serverTimezone=GMT%2B9" userId="root"
+            password="2018MVerp@)!*">
+		</jdbcConnection-->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mverp_dev?useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="root"
+                        password="2018MVerp@)!*">
+        </jdbcConnection>
+	    <javaTypeResolver >
+	      <property name="forceBigDecimals" value="false" />
+	    </javaTypeResolver>
+	    <javaModelGenerator targetPackage="org.kor.mv.mybatis.pojo" targetProject="erp">
+	    	<property name="enableSubPackages" value="false" />
+	    	<property name="trimStrings" value="true" />
+	    </javaModelGenerator>
+	    <sqlMapGenerator targetPackage="org.kor.mv.mybatis.mapper" targetProject="erp">
+	    	<property name="enableSubPackages" value="false" />
+	    </sqlMapGenerator>
+	    <javaClientGenerator targetPackage="org.kor.mv.mybatis.mapper" type="XMLMAPPER" targetProject="erp">
+	    	<property name="enableSubPackages" value="false" />
+	    </javaClientGenerator>
+	    
+        <table schema="mverp_dev" tableName="sys_user" domainObjectName="SysUser"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="sys_role" domainObjectName="SysRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="sys_user_role" domainObjectName="SysUserRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>        
+        <table schema="mverp_dev" tableName="sys_permission" domainObjectName="SysPermission"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="sys_role_permission" domainObjectName="SysRolePermission"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="등급" domainObjectName="LevelDAO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="직급" domainObjectName="PositionDAO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="mverp_dev" tableName="부서" domainObjectName="DepartDAO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">              
+        </table>
+        <table schema="mverp_dev" tableName="직원" domainObjectName="EmloyeeDAO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table> 
+        <table schema="mverp_dev" tableName="재직상태" domainObjectName="OfficeStatusDAO"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+	</context>
+</generatorConfiguration>

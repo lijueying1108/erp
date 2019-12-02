@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.PositionDAOMapper">
+  <resultMap id="BaseResultMap" type="org.kor.mv.mybatis.pojo.PositionDAO">
+    <id column="직급명" jdbcType="VARCHAR" property="직급명" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="sortstring" jdbcType="VARCHAR" property="sortstring" />
+  </resultMap>
+
+    <resultMap id="PositionComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="직급명" jdbcType="VARCHAR" property="value" />
+    <id column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <sql id="Base_Column_List">
+	   직급명, id, sortstring
+  </sql>
+  <sql id="PositionCombobox_Column_List">
+    id, 직급명
+  </sql>  
+    <select id="selectPositionNameList" resultMap="PositionComboboxResultMap">
+  	select
+  	<include refid="PositionCombobox_Column_List" />
+  	from mverp_dev.position order by sortstring
+  </select>
+  <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.PositionDAO">
+    insert into mverp_dev.position (직급명, id, sortstring
+      )
+    values (#{직급명,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, #{sortstring,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.kor.mv.mybatis.pojo.PositionDAO">
+    insert into mverp_dev.position
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="직급명 != null">
+        직급명,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sortstring != null">
+        sortstring,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="직급명 != null">
+        #{직급명,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sortstring != null">
+        #{sortstring,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.kor.mv.mybatis.pojo.PositionDAO">
+    update mverp_dev.position
+    <set>
+      <if test="sortstring != null">
+        sortstring = #{sortstring,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where 직급명 = #{직급명,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.kor.mv.mybatis.pojo.PositionDAO">
+    update mverp_dev.position
+    set sortstring = #{sortstring,jdbcType=VARCHAR}
+    where 직급명 = #{직급명,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
