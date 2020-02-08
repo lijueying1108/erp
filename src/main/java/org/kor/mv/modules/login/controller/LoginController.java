@@ -17,17 +17,19 @@ import org.kor.mv.dto.BaseResponseMessage;
 import org.kor.mv.dto.ResponseErrorMessage;
 import org.kor.mv.dto.ResponseSuccessMessage;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("user")
+@CrossOrigin
 public class LoginController{
 	private Logger logger = LogManager.getLogger();
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/auth/login", method = RequestMethod.POST)
 	@ResponseBody
 	public BaseResponseMessage doLogin(@RequestParam ("username") String username,@RequestParam ("password") String password) throws Exception {
 		ResponseSuccessMessage resp = new ResponseSuccessMessage();
@@ -38,12 +40,13 @@ public class LoginController{
         	currentUser = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
         	resp.setToken(SecurityUtils.getSubject().getSession().getId());
         	resp.setData(currentUser);
+        	resp.setCode("20000");
         	resp.setSuccessMsg("Login success");
             return resp;
         } catch(IncorrectCredentialsException e) {
-        	return new ResponseErrorMessage("","Id or password is wrong");
+        	return new ResponseErrorMessage("Id or password is wrong","20000");
         } catch(UnknownAccountException e) {
-        	return new ResponseErrorMessage("","User does not exist");
+        	return new ResponseErrorMessage("User does not exist","20000");
         }
 	}
 	
@@ -55,6 +58,7 @@ public class LoginController{
 		currentUser.logout();
 		
 		resp.setCode("");
+		resp.setCode("20000");
 		resp.setSuccessMsg("logout 성공");
 		return resp;
 	}

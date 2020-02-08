@@ -6,6 +6,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
@@ -17,11 +18,26 @@ public class SessionManager extends DefaultWebSessionManager {
 	private Logger logger = LogManager.getLogger();
 
     private String authorization = "Authorization";
-    
+
+    private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
+
+    public SessionManager() {
+        super();
+        setGlobalSessionTimeout(DEFAULT_GLOBAL_SESSION_TIMEOUT * 48);
+    }
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        return this.getReferencedSessionId(request, response);
+    	String sessionId = WebUtils.toHttp(request).getHeader(this.authorization);
+    	if (!StringUtils.isEmpty(sessionId)) {
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
+            return sessionId;   		
+    	} else {
+    		return super.getSessionId(request, response);
+    	}
+        
     }
 
     private Serializable getReferencedSessionId(ServletRequest request, ServletResponse response) {

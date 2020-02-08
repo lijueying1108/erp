@@ -6,13 +6,24 @@ import org.kor.mv.mybatis.pojo.SysPermission;
 
 public class ActiveUser implements java.io.Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String usercode;
 	private String username;
 	
 	private List<SysPermission> menus;	
 	private List<SysPermission> permissions;
+	private List<String> roles;
 	
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
 	public String getId() {
 		return id;
 	}

@@ -17,10 +17,12 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.kor.mv.dto.ActiveUser;
 import org.kor.mv.mybatis.pojo.EmployeeDAO;
 import org.kor.mv.mybatis.pojo.SysPermission;
+import org.kor.mv.mybatis.pojo.SysRole;
 import org.kor.mv.mybatis.pojo.SysUser;
 import org.kor.mv.shiro.service.SysUserService;
 import org.kor.mv.util.JWTUtil;
@@ -38,7 +40,12 @@ public class MverpRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// TODO Auto-generated method stub
         //String username = JWTUtil.getUsername(principals.toString());
-		String username = (String) principals.getPrimaryPrincipal();
+		Session session = SecurityUtils.getSubject().getSession();
+		LOGGER.debug(principals);
+		ActiveUser currentUser = new ActiveUser();
+		currentUser = (ActiveUser) principals.getPrimaryPrincipal();
+		String username = currentUser.getUsername();
+		System.out.println("currentUser"+username);
 		LOGGER.debug(username);
         SysUser sysUser = new SysUser();
         
@@ -46,22 +53,24 @@ public class MverpRealm extends AuthorizingRealm {
         	sysUser = sysUserService.findSysUserByUserCode(username);;
         }
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-		List<SysPermission> permissionList = null;
+		//List<SysPermission> permissionList = null;
+		List<SysRole> rolesList = null;
 		try {
-			permissionList = sysUserService.findPermissionListByUserCode(sysUser.getId());
-			LOGGER.debug(permissionList);
+			//permissionList = sysUserService.findPermissionListByUserCode(sysUser.getId());
+			rolesList = sysUserService.findRoleByUsername(username);
+			LOGGER.debug(rolesList);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		List<String> permissions = new ArrayList<String>();
-		 if (permissionList != null) {
-			 for(SysPermission sysPermission:permissionList) {
-				 permissions.add(sysPermission.getPercode());
+		List<String> roles = new ArrayList<String>();
+		 if (rolesList != null) {
+			 for(SysRole sysRole:rolesList) {
+				 roles.add(sysRole.getName());
 			 }
 		 }
-        
-        simpleAuthorizationInfo.addStringPermissions(permissions);
+		 System.out.println(roles.size());
+        simpleAuthorizationInfo.addRoles(roles);
         return simpleAuthorizationInfo;
 	}
 
@@ -76,7 +85,7 @@ public class MverpRealm extends AuthorizingRealm {
 		 SysUser sysUser = sysUserService.findSysUserByUserCode(username);
 		 
 		 List<SysPermission> menus = null;
-		 
+		 List<SysRole> rolesList = null;
 		 
 		 if (sysUser == null) {
 			 throw new UnknownAccountException();
@@ -87,19 +96,25 @@ public class MverpRealm extends AuthorizingRealm {
 		 try {
 				employeeDAO = sysUserService.selectEmployeeName(sysUser.getEmloyeeid()); 
 				menus = sysUserService.findMenuListByUserCode(sysUser.getId());
+				rolesList = sysUserService.findRoleByUsername(sysUser.getUsername());
 		 }catch (Exception e) {
 				 e.printStackTrace();
 				 return null;
 		}
+		List<String> roles = new ArrayList<String>();
+		  if (rolesList != null) {
+			for(SysRole sysRole:rolesList) {
+				 roles.add(sysRole.getName());
+				}
+		  }			 
 		ActiveUser activeUser = new ActiveUser();
 		activeUser.setId(sysUser.getId());
 		activeUser.setUsercode(sysUser.getUsername());
 		activeUser.setUsername(employeeDAO.getName());
 		activeUser.setMenus(menus);
-		 /*if (Boolean.TRUE.equals(sysUser.getLocked())) {
-			 throw new LockedAccountException();
-		 }*/
-		System.out.println(sysUser.getUsername());
+	
+		activeUser.setRoles(roles);
+		
 		 SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(activeUser,sysUser.getPassword(),getName());
 		 
 		 return authenticationInfo;

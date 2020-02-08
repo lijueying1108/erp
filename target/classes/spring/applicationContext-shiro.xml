@@ -13,12 +13,12 @@
   <context:component-scan base-package="org.kor.mv.shiro" />
   <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
   	<property name="securityManager" ref="securityManager" />
-  	<property name="loginUrl" value="/login"/>
+  	<property name="loginUrl" value="/auth/login"/>
   	<property name="filterChainDefinitions">
   		<value>
   			/logout = logout
-  			/login =anon
-			/** = authc
+  			/auth/login =anon
+			/** = anon
   		</value>
   	</property>
   </bean>

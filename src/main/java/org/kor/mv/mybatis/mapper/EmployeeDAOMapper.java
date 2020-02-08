@@ -12,7 +12,7 @@ public interface EmployeeDAOMapper {
 
     int insertSelective(EmployeeDAO record);
     
-    EmployeeDAO selectEmployeeInfoByName(@Param("name")String name); 
+    List<EmployeeDAO> selectEmployeeInfoByName(@Param("name")String name); 
     
     EmployeeDAO selectByPrimaryKey(@Param("id") String id);
     

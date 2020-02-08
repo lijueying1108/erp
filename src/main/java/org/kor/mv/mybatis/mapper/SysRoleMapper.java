@@ -1,5 +1,7 @@
 package org.kor.mv.mybatis.mapper;
 
+import java.util.List;
+
 import org.kor.mv.mybatis.pojo.SysRole;
 
 public interface SysRoleMapper {
@@ -14,4 +16,6 @@ public interface SysRoleMapper {
 	int updateByPrimaryKeySelective(SysRole record);
 
 	int updateByPrimaryKey(SysRole record);
+	
+	List<SysRole> findRoleByUsername (String username);
 }

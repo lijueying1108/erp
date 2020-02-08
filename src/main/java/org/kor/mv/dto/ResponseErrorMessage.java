@@ -3,16 +3,15 @@ package org.kor.mv.dto;
 public class ResponseErrorMessage extends BaseResponseMessage {
 
 	private String errMsg;
-	private String errCode;
+	private String code;
 	
 	public ResponseErrorMessage() {
 		super();
-	}
-	
-	public ResponseErrorMessage(String errMsg, String errCode) {
+	}	
+	public ResponseErrorMessage(String errMsg, String code) {
 		super();
 		this.errMsg = errMsg;
-		this.errCode = errCode;
+		this.code = code;
 	}
 	public String getErrMsg() {
 		return errMsg;
@@ -20,11 +19,11 @@ public class ResponseErrorMessage extends BaseResponseMessage {
 	public void setErrMsg(String errMsg) {
 		this.errMsg = errMsg;
 	}
-	public String getErrCode() {
-		return errCode;
+	public String getCode() {
+		return code;
 	}
-	public void setErrCode(String errCode) {
-		this.errCode = errCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 }

@@ -28,31 +28,34 @@ public class EmpManageServiceImpl implements EmpManageService {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	
-	public EmpManageVO selectEmployeeInfoByName(String name) {
+	public List<EmpManageVO> selectEmployeeInfoByName(String name) {
 		// TODO Auto-generated method stub
 		
-		EmpManageVO empManageVO = new EmpManageVO();
-		EmployeeDAO employeeDAO = new EmployeeDAO();
-		List<EmpManageDTO> empManageDTOList = new ArrayList<EmpManageDTO>();
 		
-		employeeDAO = employeeDAOMapper.selectEmployeeInfoByName(name);
-		if (employeeDAO != null) {
-			empManageVO.setId(employeeDAO.getId());
-			empManageVO.setName(employeeDAO.getName());
-			empManageVO.setResidRegistrNum(employeeDAO.getResidRegistrNum());
-			empManageVO.setEmailAddress(employeeDAO.getEmailAddress());
-			empManageVO.setMobileNum(employeeDAO.getMobileNum());
-			empManageVO.setCertification(employeeDAO.getCertification());
-			empManageVO.setPassword("*****");
-			empManageVO.setSpecialNote(employeeDAO.getSpecialNote());
-			empManageVO.setHiredate(employeeDAO.getHiredate());
-			empManageVO.setDepart(employeeDAO.getDepart());
-			empManageVO.setPosition(employeeDAO.getPosition());
-			empManageVO.setLevel(employeeDAO.getLevel());
-			empManageVO.setResignationDate(employeeDAO.getResignationDate());
-			empManageVO.setOfficeStatus(employeeDAO.getOfficeStatus());
+		List<EmpManageVO> empManageVOList = new ArrayList<EmpManageVO>();		
+		List<EmployeeDAO> empdaoList = employeeDAOMapper.selectEmployeeInfoByName(name);
+		if (empdaoList.size() >0 ) {
+			for (EmployeeDAO employeeDAO:empdaoList) {
+				EmpManageVO empManageVO = new EmpManageVO();
+				empManageVO.setId(employeeDAO.getId());
+				empManageVO.setName(employeeDAO.getName());
+				empManageVO.setResidRegistrNum(employeeDAO.getResidRegistrNum());
+				empManageVO.setEmailAddress(employeeDAO.getEmailAddress());
+				empManageVO.setMobileNum(employeeDAO.getMobileNum());
+				empManageVO.setCertification(employeeDAO.getCertification());
+				empManageVO.setPassword("*****");
+				empManageVO.setSpecialNote(employeeDAO.getSpecialNote());
+				empManageVO.setHiredate(employeeDAO.getHiredate());
+				empManageVO.setDepart(employeeDAO.getDepart());
+				empManageVO.setPosition(employeeDAO.getPosition());
+				empManageVO.setLevel(employeeDAO.getLevel());
+				empManageVO.setResignationDate(employeeDAO.getResignationDate());
+				empManageVO.setOfficeStatus(employeeDAO.getOfficeStatus());
+				empManageVOList.add(empManageVO);
+			}
+
 			//empManageDTOList.add(empManageDTO);
-			return empManageVO;
+			return empManageVOList;
 		} else return null;
 	}
 

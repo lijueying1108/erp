@@ -8,7 +8,7 @@ import org.kor.mv.mybatis.pojo.EmployeeDAO;
 
 public interface EmpManageService {
 
-	EmpManageVO selectEmployeeInfoByName(String id);
+	List<EmpManageVO> selectEmployeeInfoByName(String id);
 	
 	int selectEmpManageDAOByPrimaryKey(String id);
 	

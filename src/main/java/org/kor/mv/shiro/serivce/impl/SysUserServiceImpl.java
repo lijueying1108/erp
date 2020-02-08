@@ -7,9 +7,11 @@ import org.kor.mv.modules.empManage.service.EmpManageService;
 import org.kor.mv.modules.empManage.vo.EmpManageVO;
 import org.kor.mv.mybatis.mapper.EmployeeDAOMapper;
 import org.kor.mv.mybatis.mapper.SysPermissionMapper;
+import org.kor.mv.mybatis.mapper.SysRoleMapper;
 import org.kor.mv.mybatis.mapper.SysUserMapper;
 import org.kor.mv.mybatis.pojo.EmployeeDAO;
 import org.kor.mv.mybatis.pojo.SysPermission;
+import org.kor.mv.mybatis.pojo.SysRole;
 import org.kor.mv.mybatis.pojo.SysUser;
 import org.kor.mv.shiro.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class SysUserServiceImpl implements SysUserService {
 	
 	@Autowired 
 	private SysPermissionMapper sysPermissionMapper; 
+	
+	@Autowired 
+	private SysRoleMapper sysRoleMapper; 
 	
 	@Autowired 
 	private EmployeeDAOMapper employeeDAOMapper; 
@@ -60,6 +65,15 @@ public class SysUserServiceImpl implements SysUserService {
 		// TODO Auto-generated method stub
 		if (id != null) {
 			return employeeDAOMapper.selectByPrimaryKey(id);
+		} else {
+			return null;
+		}
+	}
+
+	public List<SysRole> findRoleByUsername(String username) {
+		// TODO Auto-generated method stub
+		if (username != null) {
+			return sysRoleMapper.findRoleByUsername(username);
 		} else {
 			return null;
 		}

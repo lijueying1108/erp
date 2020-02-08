@@ -15,6 +15,10 @@
     from mverp_dev.sys_role
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="findRoleByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select b.id, b.name FROM mverp_dev.sys_role b, mverp_dev.sys_user a,   mverp_dev.sys_user_role c 
+  where c.sys_role_id = b.id and c.sys_user_id = a.id and a.username=#{username,jdbcType=VARCHAR};
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from mverp_dev.sys_role
     where id = #{id,jdbcType=VARCHAR}

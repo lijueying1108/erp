@@ -2,7 +2,9 @@ package org.kor.mv.test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -26,6 +28,16 @@ public class GeneratorSqlmap {
 			GeneratorSqlmap generatorSqlmap = new GeneratorSqlmap();
 			generatorSqlmap.generator();
 		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		Map<String, Class<?>> map = new HashMap<String, Class<?>>();
+		try {
+			map.put("SysUser", Class.forName("SysUser"));
+			map.put("Name", Class.forName("Name"));
+			map.put("Project", Class.forName("Porject"));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
