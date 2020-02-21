@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -25,29 +27,64 @@ public class ComboboxController {
 	@RequestMapping(value="/queryDepartmentsList")
 	@ResponseBody
 	public ResponseBean queryDepartmentsList(HttpServletRequest httpRequest, HttpSession httpSess) {
-		ResponseBean respBean = new ResponseBean("20000","success",comboboxService.selectDepartComboboxData());		
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectDepartComboboxData());
 		return respBean;
 	}
 	
 	@RequestMapping("/queryPositionsList")
 	@ResponseBody
 	public ResponseBean queryPositionsList(HttpServletRequest httpRequest, HttpSession httpSess) {
-		ResponseBean respBean = new ResponseBean("20000","success",comboboxService.selectPositionComboboxData());		
-		return respBean;		
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectPositionComboboxData());
+		return respBean;	
 	}
 	
 	
 	@RequestMapping("/queryLevelsList")
 	@ResponseBody
 	public ResponseBean queryLevelsList(HttpServletRequest httpRequest, HttpSession httpSess) {
-		ResponseBean respBean = new ResponseBean("20000","success",comboboxService.selectLevelComboboxData());		
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectDepartComboboxData());
 		return respBean;
 	}
 	
 	@RequestMapping("/queryOfficeStatusList")
 	@ResponseBody
 	public ResponseBean queryOfficeStatusList(HttpServletRequest httpRequest, HttpSession httpSess) {
-		ResponseBean respBean = new ResponseBean("20000","success",comboboxService.selectOfficeStatusComboboxData());		
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectOfficeStatusComboboxData());
+		return respBean;
+	}
+	
+	@RequestMapping("/queryBusiDepartTeamsList")
+	@ResponseBody
+	public ResponseBean queryBusiDepartTeamsList(HttpServletRequest httpRequest, HttpSession httpSess) {
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectBusiDepartTeamsComboboxData());
+		return respBean;
+	}
+
+	@RequestMapping("/queryProjectYearsList")
+	@ResponseBody
+	public ResponseBean queryProjectYearsList(HttpServletRequest httpRequest, HttpSession httpSess) {
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectProjectYearsComboboxData());
+		return respBean;
+	}
+	
+	@RequestMapping("/queryProjectSeasonsList")
+	@ResponseBody
+	public ResponseBean queryProjectSeasonsList(HttpServletRequest httpRequest, HttpSession httpSess) {
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectProjectSeasonsComboboxData());
+		return respBean;
+	}
+	
+	@RequestMapping("/queryProjectCustomersList")
+	@ResponseBody
+	public ResponseBean queryProjectCustomersList(HttpServletRequest httpRequest, HttpSession httpSess) {
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectProjectCustomersComboboxData());
+		return respBean;
+	}
+	
+	@RequestMapping(value="/queryEmpListByDepartName",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseBean queryProjectWinStatusList(@RequestParam ("departName") String departName) {
+		ResponseBean respBean = new ResponseBean("20000",comboboxService.selectEmpComboboxData(departName));
 		return respBean;
 	}
 }

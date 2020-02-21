@@ -25,9 +25,15 @@ public class ResponseBean {
 		this.status = status;
 	}
 	
-	public ResponseBean(String code, String msg, Object data) {
+	public ResponseBean(String code, Object data) {
 		this.code = code;
-		this.msg = msg;
+		if(data != null) {
+			this.msg = "sucess";
+			this.status = true;
+		} else {
+			this.msg = "failed";
+			this.status = false;
+		}		
 		this.data = data;
 	}
 	

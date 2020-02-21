@@ -13,4 +13,17 @@ public interface ComboboxService {
 	public List<ComboboxDTO> selectPositionComboboxData();
 	
 	public List<ComboboxDTO> selectOfficeStatusComboboxData();
+	
+	public List<ComboboxDTO> selectBusiDepartTeamsComboboxData();
+	
+	public List<ComboboxDTO> selectProjectYearsComboboxData();
+	
+	public List<ComboboxDTO> selectProjectSeasonsComboboxData();
+	
+	public List<ComboboxDTO> selectProjectCustomersComboboxData();
+	
+	public List<ComboboxDTO> selectProjectWinStatusComboboxData();
+	
+	public List<ComboboxDTO> selectEmpComboboxData(String departName);
+
 }

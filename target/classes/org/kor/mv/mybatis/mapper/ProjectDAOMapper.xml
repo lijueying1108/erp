@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kor.mv.mybatis.mapper.ProjectDAOMapper">
+  <resultMap id="ProjectYearComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="year" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <resultMap id="ProjectSeasonComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="season" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap> 
+  <resultMap type="org.kor.mv.modules.common.dto.ComboboxDTO" id="ProjectCustomersComboboxResultMap">
+    <id column="customerCompany" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <resultMap id="ProjectWinStatusComboboxResultMap" type="org.kor.mv.modules.common.dto.ComboboxDTO">
+    <id column="winStatus" jdbcType="VARCHAR" property="value" />
+    <result column="id" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <resultMap id="ProjectCodeCombobx" type="org.kor.mv.modules.projectManage.dto.ProjectCodeDTO">
+  	<id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="value" />
+    <result column="sort" jdbcType="VARCHAR" property="key" />
+  </resultMap>
+  <resultMap type="org.kor.mv.modules.projectManage.dto.ProjectTableDTO" id="ProjectTableDTOResultMap">
+  	<id column="id" jdbcType="VARCHAR" property="key"/>
+  	<result column="year" jdbcType="VARCHAR" property="year"/>
+  	<result column="season" jdbcType="VARCHAR" property="season"/>
+  	<result column="customerCompany" jdbcType="VARCHAR" property="customerCompany"/>
+  	<result column="gender" jdbcType="VARCHAR" property="gender"/>
+  	<result column="goodsType" jdbcType="VARCHAR" property="goodsType"/>
+  	<result column="projectId" jdbcType="VARCHAR" property="projectID"/>
+  	<result column="winStatus" jdbcType="VARCHAR" property="winStatus"/>
+  	<result column="projectNameCode" jdbcType="VARCHAR" property="projectNameCode"/>
+  	<result column="businessDepartTeam" jdbcType="VARCHAR" property="busiDepartTeamName"/>
+  </resultMap>
+  <sql id="projectCodeSql">
+  	code,name,sort
+  </sql>
+  <select id="selectProjectYearCode" resultMap="ProjectCodeCombobx">
+  	select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.year_code
+  </select>
+  <select id="selectProjectCustomerClassificCode"  resultMap="ProjectCodeCombobx">
+  	select
+  	<include refid="projectCodeSql" />
+  	from .customer_classification_code  
+  </select>
+  <select id="selectProjectCustomerCode"  resultMap="ProjectCodeCombobx">
+    select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.mverp_dev.customer_code
+  </select>
+  <select id="selectProjectSeasonCode"  resultMap="ProjectCodeCombobx">
+    select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.mverp_dev.season_code
+  </select>
+  <select id="selectProjectGoodsTypeCode"  resultMap="ProjectCodeCombobx">
+    select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.mverp_dev.goodstype_code
+  </select>
+  <select id="selectProjectGenderCode"  resultMap="ProjectCodeCombobx">
+    select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.mverp_dev.gender_code  
+  </select>
+  <select id="selectProjectWinStatusCode"  resultMap="ProjectCodeCombobx">
+    select
+  	<include refid="projectCodeSql" />
+  	from mverp_dev.mverp_dev.winstatus_code  
+  </select>  
+  <select id="selectProjectYearslist" resultMap="ProjectYearComboboxResultMap">
+  	SELECT id, year FROM mverp_dev.project_name group by year
+  </select>
+  
+  <select id="selectProjectSeasonslist" resultMap="ProjectSeasonComboboxResultMap">
+  	SELECT id, season FROM mverp_dev.project_name group by season order by season
+  </select>
+  
+  <select id="selectProjectCustomerslist" resultMap="ProjectCustomersComboboxResultMap">
+  	SELECT id, customerCompany FROM mverp_dev.project_name group by customerCompany order by customerCompany
+  </select>
+  
+  <select id="selectProjectWinStatuslist" resultMap="ProjectWinStatusComboboxResultMap">
+  	SELECT id, winStatus FROM mverp_dev.project_name group by winStatus order by winStatus
+  </select>
+  
+  <select id="selectProjectTableData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultMap="ProjectTableDTOResultMap">
+  SELECT a.*, b.businessDepartTeam 
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  </select>
+  <select id="selectProjectTableYearFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.year
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.year
+  </select>
+  <select id="selectProjectTableGoodsTypeFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.goodsType
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.goodsType order by a.goodsType
+  </select>
+  <select id="selectProjectTableGenderFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.gender
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.gender order by a.gender
+  </select>
+  <select id="selectProjectTableWinStatusFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.winStatus
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.winStatus order by a.winStatus
+  </select>
+  <select id="selectProjectTableSeasonFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.season
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.season order by a.season
+  </select>
+  <select id="selectProjectTableCustomerCompanyFiltersData" parameterType="org.kor.mv.modules.projectManage.vo.ProjectTableVO" resultType="String">
+  SELECT a.customerCompany
+  FROM mverp_dev.project_name a inner join mverp_dev.project b 
+  on a.projectNameCode=b.projectNameCode 
+  where a.winStatus = #{winStatus} or a.season=#{season} or a.year=#{year} or a.customerCompany=#{customerCompany} or b.businessDepartTeam=#{businessDepartTeam}
+  group by a.customerCompany order by a.customerCompany
+  </select>
+</mapper>

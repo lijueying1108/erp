@@ -21,6 +21,13 @@
   	<include refid="DepartCombobox_Column_List" />
   	from mverp_dev.department order by sortstring
   </select>
+  
+  <select id="selectBusinessDepartTeamsList" resultMap="DepartComboboxResultMap">
+  	select
+  	<include refid="DepartCombobox_Column_List" />
+  	from mverp_dev.department
+  	where 부서명 like '영업%' order by sortstring
+  </select>
  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

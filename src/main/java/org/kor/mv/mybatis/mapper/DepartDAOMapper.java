@@ -20,4 +20,6 @@ public interface DepartDAOMapper {
 
     
     List<ComboboxDTO> selectDepartNameList();
+    
+    List<ComboboxDTO> selectBusinessDepartTeamsList();
 }

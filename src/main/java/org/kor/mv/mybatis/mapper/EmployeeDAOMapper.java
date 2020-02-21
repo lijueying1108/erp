@@ -3,6 +3,7 @@ package org.kor.mv.mybatis.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.kor.mv.modules.common.dto.ComboboxDTO;
 import org.kor.mv.mybatis.pojo.EmployeeDAO;
 import org.kor.mv.mybatis.pojo.LevelDAO;
 
@@ -20,4 +21,5 @@ public interface EmployeeDAOMapper {
     
     List<String> selectEmployeeNameList();
     
+    List<ComboboxDTO> selectEmployeeNameListGroupByDepart(@Param("departName")String departName);
 }

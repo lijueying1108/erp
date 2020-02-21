@@ -18,6 +18,10 @@
     <result column="재직상태" jdbcType="VARCHAR" property="officeStatus" />
     <result column="집주소" jdbcType="VARCHAR" property="homeAddress" />
   </resultMap>
+  <resultMap type="org.kor.mv.modules.common.dto.ComboboxDTO" id="EmpComboboxDTO">
+    <result column="ID" jdbcType="VARCHAR" property="key" />
+    <result column="성명" jdbcType="VARCHAR" property="value" />
+  </resultMap>
   <sql id="BaseResultMap">
   ID, 성명, 주민등록번호, 
       핸드폰번호, 이메일주소, 자격증유무, 특이사항, 
@@ -42,6 +46,11 @@
   	select
   	<include refid="BaseResultMap" />
   	from mverp_dev.employee where ID=#{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectEmployeeNameListGroupByDepart" parameterType="java.lang.String" resultMap="EmpComboboxDTO">
+  	select
+  	ID, 성명
+  	from mverp_dev.employee where 부서 like concat('%',#{departName,jdbcType=VARCHAR},'%') order by 성명 asc
   </select>
   <insert id="insert" parameterType="org.kor.mv.mybatis.pojo.EmployeeDAO">
     insert into mverp_dev.employee (ID, 성명, 주민등록번호, 
