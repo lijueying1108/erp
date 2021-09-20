@@ -363,7 +363,7 @@
   	<jstl.version>1.2</jstl.version>
   	<jackson.version>2.9.10</jackson.version>
   	<aspectj.version>1.9.4</aspectj.version>
-  	<shiro.version>1.4.1</shiro.version>
+  	<shiro.version>1.8.0</shiro.version>
   	<hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
   	<jboss.logging.version>3.4.1.Final</jboss.logging.version>
   	<validation.version>2.0.1.Final</validation.version>
