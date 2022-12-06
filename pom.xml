@@ -369,7 +369,7 @@
   	<validation.version>2.0.1.Final</validation.version>
     <commons.fileupload.version>1.4</commons.fileupload.version>
     <commons.codec.version>1.13</commons.codec.version>
-    <commons.net.version>3.6</commons.net.version>
+    <commons.net.version>3.9.0</commons.net.version>
     <commons.logging.version>1.2</commons.logging.version>
     <commons.collections.version>4.4</commons.collections.version>
     
